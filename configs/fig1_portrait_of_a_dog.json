@@ -7,5 +7,6 @@
   "sigma_r": 0.3,
   "detail": 1.0,
   "t_end": 15,
+  "image_size": [1024, 1024],
   "sd_version": "2.1"
 }
