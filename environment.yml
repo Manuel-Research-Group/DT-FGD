@@ -1,12 +1,10 @@
 name: dtfgd
 channels:
-  - pytorch
-  - nvidia
   - conda-forge
   - defaults
 dependencies:
   # Core
-  - python=3.12.2          # PyTorch 2.4 and Diffusers 0.30 both support 3.11
+  - python=3.11.13         # PyTorch 2.4 and Diffusers 0.30 both support 3.11
   - pytorch=2.4.*=cuda*  # auto-falls back to cpu build if no CUDA
   - torchvision
   - diffusers=0.30.0

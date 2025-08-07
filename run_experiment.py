@@ -121,15 +121,21 @@ def main():
     t_dt = time.time() - t0
     img_dt.save(outdir / "dtfgd.png")
 
-    # side‑by‑side
+    # side-by-side
     fig, ax = plt.subplots(1, 2, figsize=(10, 5))
-    ax[0].imshow(img_orig); ax[0].set_title(f"FGD")
+    ax[0].imshow(img_orig)
+    ax[0].set_title(f"FGD")
     ax[0].axis("off")
-    ax[1].imshow(img_dt);   ax[1].set_title(f"DT-FGD")
+    ax[1].imshow(img_dt)
+    ax[1].set_title(f"DT-FGD")
     ax[1].axis("off")
     side = outdir / "comparison.png"
     plt.tight_layout()
     fig.savefig(side, dpi=200)
+
+    # Show the figure to the user
+    plt.show()
+
     print(f"✓ Results saved in {outdir}/")
 
 if __name__ == "__main__":
