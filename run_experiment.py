@@ -111,15 +111,16 @@ def main():
     outdir.mkdir(exist_ok=True)
 
     # ----------------- run ----------------------------------------------------
+    img_name = args.guide.split("/")[-1].split(".")[0]
     t0 = time.time()
     img_orig = model.generate_FGD(fgd, seed=args.seed)
     t_orig = time.time() - t0
-    img_orig.save(outdir / "fgd.png")
+    img_orig.save(outdir / f"{img_name}_fgd.png")
 
     t0 = time.time()
     img_dt = model.generate_FGD(dt_filter, seed=args.seed)
     t_dt = time.time() - t0
-    img_dt.save(outdir / "dtfgd.png")
+    img_dt.save(outdir / f"{img_name}_dtfgd.png")
 
     # side-by-side
     fig, ax = plt.subplots(1, 2, figsize=(10, 5))
@@ -129,7 +130,7 @@ def main():
     ax[1].imshow(img_dt)
     ax[1].set_title(f"DT-FGD")
     ax[1].axis("off")
-    side = outdir / "comparison.png"
+    side = outdir / f"{img_name}_comparison.png"
     plt.tight_layout()
     fig.savefig(side, dpi=200)
 
