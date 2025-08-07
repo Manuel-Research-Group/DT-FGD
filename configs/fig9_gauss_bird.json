@@ -1,6 +1,6 @@
 {
   "prompt": "A portrait of a bird",
-  "guide": "assets/gauss.png",
+  "guide": "assets/gauss.jpg",
   "seed": 9,
   "initial_seed": 12,
   "sigma_s": 1.5,

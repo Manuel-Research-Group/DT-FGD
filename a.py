@@ -1,13 +1,18 @@
-import torch
+import os
+from PIL import Image
 
-# test cuda
-def test_cuda():
-    if torch.cuda.is_available():
-        device = torch.device("cuda")
-        print(f"CUDA is available. Using device: {torch.cuda.get_device_name(device)}")
-    else:
-        device = torch.device("cpu")
-        print("CUDA is not available. Using CPU.")
-    return device
+def convert_images_to_jpg(directory):
+    for filename in os.listdir(directory):
+        filepath = os.path.join(directory, filename)
+        if os.path.isfile(filepath):
+            try:
+                with Image.open(filepath) as img:
+                    rgb_img = img.convert('RGB')
+                    new_filename = os.path.splitext(filename)[0] + '.jpg'
+                    new_filepath = os.path.join(directory, new_filename)
+                    rgb_img.save(new_filepath, 'JPEG')
+            except Exception as e:
+                print(f"Skipping {filename}: {e}")
 
-test_cuda()
+# Usage
+convert_images_to_jpg('assets')

@@ -1,6 +1,6 @@
 {
   "prompt": "A portrait of a dog",
-  "guide": "assets/woman_blueheadband.png",
+  "guide": "assets/woman_blueheadband.jpg",
   "seed": 1,
   "method_seed": 10,
   "sigma_s": 1.5,
