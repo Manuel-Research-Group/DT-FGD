@@ -1,5 +1,5 @@
 #!/bin/bash
-git submodule add -f https://github.com/jaclyngu/FilteredGuidedDiffusion.git
+git submodule update --init --recursive
 # Ensure conda commands are available in scripts
 
 # Only run this manually once if the env doesn't exist
