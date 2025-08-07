@@ -1,0 +1,11 @@
+{
+  "prompt": "A portrait of a dog",
+  "guide": "assets/woman_blueheadband.png",
+  "seed": 1,
+  "method_seed": 10,
+  "sigma_s": 1.5,
+  "sigma_r": 0.3,
+  "detail": 1.0,
+  "t_end": 15,
+  "sd_version": "2.1"
+}

@@ -1,0 +1,12 @@
+{
+  "prompt": "A cat in a red hat",
+  "guide": "assets/red_hat.jpg",
+  "seed": 10,
+  "initial_seed": 1,
+  "sigma_s": 3.0,
+  "sigma_r": 0.3,
+  "t_end": 15,
+  "detail": 1.2,
+  "image_size": [512, 512],
+  "sd_version": "1.4"
+}

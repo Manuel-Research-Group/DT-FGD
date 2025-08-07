@@ -1,0 +1,3 @@
+[submodule "FilteredGuidedDiffusion"]
+	path = FilteredGuidedDiffusion
+	url = https://github.com/jaclyngu/FilteredGuidedDiffusion.git
