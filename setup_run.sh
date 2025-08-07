@@ -11,9 +11,10 @@ else
 fi
 
 
-# Run experiments
-conda run -n dtfgd --live-stream python run_experiment.py --config configs/fig1_dog.json
-conda run -n dtfgd --live-stream python run_experiment.py --config configs/fig3_dog.json
-conda run -n dtfgd --live-stream python run_experiment.py --config configs/fig7_cat.json
-conda run -n dtfgd --live-stream python run_experiment.py --config configs/fig9_bird.json
-conda run -n dtfgd --live-stream python run_experiment.py --config configs/fig10_bread.json
+
+
+conda run -n dtfgd --live-stream python run_experiment.py --config configs/fig1_portrait_of_a_dog.json
+conda run -n dtfgd --live-stream python run_experiment.py --config configs/fig3_monalisa_dog.json
+conda run -n dtfgd --live-stream python run_experiment.py --config configs/fig7_cat_red_hat.json
+conda run -n dtfgd --live-stream python run_experiment.py --config configs/fig9_gauss_bird.json
+conda run -n dtfgd --live-stream python run_experiment.py --config configs/fig10_steak_bread.json
