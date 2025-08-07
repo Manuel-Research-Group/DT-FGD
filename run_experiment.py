@@ -49,6 +49,7 @@ def parse_args() -> argparse.Namespace:
     # filter parameters
     p.add_argument("--sigma_s", type=float, default=3)
     p.add_argument("--sigma_r", type=float, default=0.3)
+    p.add_argument("--guidance_scale", type=float, default=7.5)
     p.add_argument("--detail",  type=float, default=1.2)
     p.add_argument("--t_end",   type=int, default=15)
     # SD parameters
@@ -73,6 +74,8 @@ def main():
         for k, v in cfg.items():
             setattr(args, k.replace('-', '_'), v)
 
+    print(args)
+    # exit(0)
     device = "cuda" if torch.cuda.is_available() else "cpu"
     print(f"Using device: {device}")
 
@@ -87,16 +90,20 @@ def main():
         plot_intermediate=args.plot_intermediate,
         decode_cpu=args.decode_cpu,
         device=device,
+        batch_size=1,
+        guidance_scale=args.guidance_scale
     )
+    # model = diffusionModel(scheduler='ddpm', version='2.1', use_ema=True, num_steps=50, height=1024, width=1024, plot_intermediate=False)
     model.initialize_latents_random(args.initial_seed)
 
     model.set_prompt(args.prompt)
 
-    guide_img = Image.open(args.guide)
+    guide_img = args.guide
 
     # original FGD
     fgd = FGD_mod.FGD(model, guide_img,
                       detail=args.detail,
+                      t_end=args.t_end,
                       sigmas=[args.sigma_s, args.sigma_s, args.sigma_r])
 
     # our approach dtFGD
@@ -110,15 +117,15 @@ def main():
     outdir = pathlib.Path(args.outdir)
     outdir.mkdir(exist_ok=True)
 
-    # ----------------- run ----------------------------------------------------
     img_name = args.guide.split("/")[-1].split(".")[0]
+    # ----------------- run ----------------------------------------------------
     t0 = time.time()
-    img_orig = model.generate_FGD(fgd, seed=args.seed)
+    img_orig = model.generate_FGD(fgd, seed=10)
     t_orig = time.time() - t0
     img_orig.save(outdir / f"{img_name}_fgd.png")
 
     t0 = time.time()
-    img_dt = model.generate_FGD(dt_filter, seed=args.seed)
+    img_dt = model.generate_FGD(dt_filter, seed=10)
     t_dt = time.time() - t0
     img_dt.save(outdir / f"{img_name}_dtfgd.png")
 
@@ -131,7 +138,9 @@ def main():
     ax[1].set_title(f"DT-FGD")
     ax[1].axis("off")
     side = outdir / f"{img_name}_comparison.png"
+    
     plt.tight_layout()
+    plt.subplots_adjust(top=0.85)  # Make space for titles
     fig.savefig(side, dpi=200)
 
     # Show the figure to the user

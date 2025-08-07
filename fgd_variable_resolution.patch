@@ -1,0 +1,45 @@
+diff --git a/FGD.py b/FGD.py
+index 62983c0..7d4af31 100644
+--- a/FGD.py
++++ b/FGD.py
+@@ -41,6 +41,7 @@ class FGD():
+ 
+     def set_guide_image(self, guide_image):
+         self.guide_latent = self.model.encode_image(guide_image)
++        self.latent_shape = self.guide_latent.detach().cpu().permute(0, 2, 3, 1).numpy()[0].shape
+         self.guide_image = guide_image
+         if self.sigmas != None:
+             self.set_bilateral_matrix(self.sigmas)
+@@ -55,8 +56,8 @@ class FGD():
+         guide_latent_processed = np.squeeze(guide_latent_processed)
+         bilateral_matrix = getCrossBilateralMatrix4D(guide_latent_processed.astype('double'),sigmas)
+         self.bilateral_matrix_4d = torch.Tensor(bilateral_matrix).unsqueeze(0).repeat((4,1,1)).to(device)
+-        guide_structure_latent = torch.matmul(self.bilateral_matrix_4d, self.guide_latent.reshape(4,4096,1))
+-        guide_structure_latent = guide_structure_latent.reshape(1,4,64,64)
++        guide_structure_latent = torch.matmul(self.bilateral_matrix_4d, self.guide_latent.reshape(4,self.latent_shape[0]**2,1))
++        guide_structure_latent = guide_structure_latent.reshape(1,4,self.latent_shape[0],self.latent_shape[0])
+ 
+         guide_mean = torch.mean(guide_structure_latent, (2,3), keepdim=True)
+         guide_std = torch.std(guide_structure_latent, (2,3), keepdim=True)
+@@ -71,8 +72,8 @@ class FGD():
+         self.sigmas = sigmas.tolist()
+     
+     def get_residual_structure(self, latents):
+-        current_structure = torch.matmul(self.bilateral_matrix_4d, latents.reshape(4,4096,1))
+-        current_structure = current_structure.reshape(1,4,64,64)
++        current_structure = torch.matmul(self.bilateral_matrix_4d, latents.reshape(4,self.latent_shape[0]**2,1))
++        current_structure = current_structure.reshape(1,4,self.latent_shape[0],self.latent_shape[0])
+ 
+         d_structure = self.guide_structure - current_structure
+         return d_structure
+@@ -80,8 +81,8 @@ class FGD():
+     def get_structure(self, latents, bm_4d=None):
+         if bm_4d ==None:
+             bm_4d = self.bilateral_matrix_4d
+-        structure = torch.matmul(bm_4d, latents.reshape(4,4096,1))
+-        structure = structure.reshape(1,4,64,64)
++        structure = torch.matmul(bm_4d, latents.reshape(4,self.latent_shape[0]**2,1))
++        structure = structure.reshape(1,4,self.latent_shape[0],self.latent_shape[0])
+         return structure
+ 
+     def get_guidance(self, latents, input_latents, scheduler, t):

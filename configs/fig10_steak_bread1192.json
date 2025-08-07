@@ -1,6 +1,6 @@
 {
   "prompt": "A photo of a steak",
-  "guide": "assets/bread_2.jpg",
+  "guide": "assets/bread_2.png",
   "seed": 1,
   "initial_seed": 10,
   "sigma_s": 3.0,
