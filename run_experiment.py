@@ -78,8 +78,8 @@ def main():
 
     # ---- diffusion model -----------------------------------------------------
     model = diffusionModel(
-        height=512,
-        width=512,
+        height=args.image_size[0],
+        width=args.image_size[1],
         num_steps=args.steps,
         scheduler='ddpm',
         use_ema=True,
