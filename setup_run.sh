@@ -1,7 +1,14 @@
 #!/bin/bash
 git submodule update --init --recursive
 
-pushd FilteredGuidedDiffusion && git apply ../fgd_variable_resolution.patch && popd
+pushd FilteredGuidedDiffusion
+if git apply --check ../fgd_variable_resolution.patch; then
+    echo "Applying variable resolution patch now..."
+    git apply ../fgd_variable_resolution.patch
+else
+    echo "Variable resolution patch cannot be applied or has already been applied. Skipping."
+fi
+popd
 
 # Only run this manually once if the env doesn't exist
 if ! conda env list | grep -q 'dtfgd'; then

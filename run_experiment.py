@@ -80,73 +80,108 @@ def main():
     print(f"Using device: {device}")
 
     # ---- diffusion model -----------------------------------------------------
-    model = diffusionModel(
-        height=args.image_size[0],
-        width=args.image_size[1],
-        num_steps=args.steps,
-        scheduler='ddpm',
-        use_ema=True,
-        version=args.sd_version,
-        plot_intermediate=args.plot_intermediate,
-        decode_cpu=args.decode_cpu,
-        device=device,
-        batch_size=1,
-        guidance_scale=args.guidance_scale
-    )
-    # model = diffusionModel(scheduler='ddpm', version='2.1', use_ema=True, num_steps=50, height=1024, width=1024, plot_intermediate=False)
+    # model = diffusionModel(
+    #     height=args.image_size[0],
+    #     width=args.image_size[1],
+    #     num_steps=args.steps,
+    #     scheduler='ddpm',
+    #     use_ema=True,
+    #     version=args.sd_version,
+    #     plot_intermediate=args.plot_intermediate,
+    #     decode_cpu=args.decode_cpu,
+    #     device=device,
+    #     batch_size=1,
+    #     guidance_scale=args.guidance_scale
+    # )
+    model = diffusionModel(scheduler='ddpm', version='2.1', use_ema=True, num_steps=50, height=1024, width=1024, plot_intermediate=False)
     model.initialize_latents_random(args.initial_seed)
 
     model.set_prompt(args.prompt)
 
     guide_img = args.guide
 
-    # original FGD
-    fgd = FGD_mod.FGD(model, guide_img,
-                      detail=args.detail,
-                      t_end=args.t_end,
-                      sigmas=[args.sigma_s, args.sigma_s, args.sigma_r])
-
-    # our approach dtFGD
-    dt_filter = dtFGD(model, guide_img,
-                      detail=args.detail,
-                      sigmas=[args.sigma_s, args.sigma_s, args.sigma_r],
-                      t_end=args.t_end,
-                      num_iterations=3,
-                      device=device)
-
     outdir = pathlib.Path(args.outdir)
     outdir.mkdir(exist_ok=True)
 
     img_name = args.guide.split("/")[-1].split(".")[0]
     # ----------------- run ----------------------------------------------------
-    t0 = time.time()
-    img_orig = model.generate_FGD(fgd, seed=10)
-    t_orig = time.time() - t0
-    img_orig.save(outdir / f"{img_name}_fgd.png")
+    # original FGD
+    fgd_ok = False
+    img_orig = None
 
-    t0 = time.time()
-    img_dt = model.generate_FGD(dt_filter, seed=10)
-    t_dt = time.time() - t0
-    img_dt.save(outdir / f"{img_name}_dtfgd.png")
+    try:
+        fgd = FGD_mod.FGD(model, guide_img,
+                        detail=args.detail,
+                        t_end=args.t_end,
+                        sigmas=[args.sigma_s, args.sigma_s, args.sigma_r])
+        
+        t0 = time.time()
+        img_orig = model.generate_FGD(fgd, seed=10)
+        t_orig = time.time() - t0
+        img_orig.save(outdir / f"{img_name}_fgd.png")
+
+        del fgd
+        fgd_ok = True
+    except:
+        print("Error: FGD generation failed. Ensure your GPU has at least 12 GB of VRAM to run.")
+
+
+    dtfgd_ok = False
+    img_dt = None
+    try:
+        # our approach dtFGD
+        dt_filter = dtFGD(model, guide_img,
+                        detail=args.detail,
+                        sigmas=[args.sigma_s, args.sigma_s, args.sigma_r],
+                        t_end=args.t_end,
+                        num_iterations=3,
+                        device=device)
+        
+        t0 = time.time()
+        img_dt = model.generate_FGD(dt_filter, seed=10)
+        t_dt = time.time() - t0
+        img_dt.save(outdir / f"{img_name}_dtfgd.png")
+
+        del dt_filter
+        dtfgd_ok = True
+    except:
+        print("Error: DT-FGD generation failed. Ensure your GPU has at least 8 GB of VRAM to run.")
 
     # side-by-side
-    fig, ax = plt.subplots(1, 2, figsize=(10, 5))
-    ax[0].imshow(img_orig)
-    ax[0].set_title(f"FGD")
-    ax[0].axis("off")
-    ax[1].imshow(img_dt)
-    ax[1].set_title(f"DT-FGD")
-    ax[1].axis("off")
-    side = outdir / f"{img_name}_comparison.png"
+    if not fgd_ok and not dtfgd_ok:
+        print("Both FGD and dtFGD failed. Exiting.")
+        return
     
-    plt.tight_layout()
-    plt.subplots_adjust(top=0.85)  # Make space for titles
-    fig.savefig(side, dpi=200)
+    if fgd_ok and dtfgd_ok:
+        fig, ax = plt.subplots(1, 2, figsize=(10, 5))
+        ax[0].imshow(img_orig)
+        ax[0].set_title(f"FGD")
+        ax[0].axis("off")
+        ax[1].imshow(img_dt)
+        ax[1].set_title(f"DT-FGD")
+        ax[1].axis("off")
+        side = outdir / f"{img_name}_comparison.png"
+        
+        plt.tight_layout()
+        plt.subplots_adjust(top=0.85)  # Make space for titles
+        fig.savefig(side, dpi=200)
 
-    # Show the figure to the user
-    plt.show()
-
-    print(f"✓ Results saved in {outdir}/")
+        # Show the figure to the user
+        plt.show()
+        print(f"✓ Comparison saved in {side}")
+    else:
+        if fgd_ok:
+            fig, ax = plt.subplots(figsize=(5, 5))
+            ax.imshow(img_orig)
+            ax.set_title(f"FGD")
+            ax.axis("off")
+            print(f"✓ FGD result saved in {outdir / f'{img_name}_fgd.png'}")
+        if dtfgd_ok:
+            fig, ax = plt.subplots(figsize=(5, 5))
+            ax.imshow(img_dt)
+            ax.set_title(f"DT-FGD")
+            ax.axis("off")
+            print(f"✓ dtFGD result saved in {outdir / f'{img_name}_dtfgd.png'}")
 
 if __name__ == "__main__":
     main()

@@ -1,6 +1,6 @@
 {
   "prompt": "A painting of a dog in a wig",
-  "guide": "assets/monalisa.jpg",
+  "guide": "assets/monalisa.png",
   "seed": 10,
   "initial_seed": 1,
   "sigma_s": 3.0,
