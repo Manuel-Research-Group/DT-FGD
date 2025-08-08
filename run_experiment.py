@@ -37,7 +37,6 @@ def load_json(fp: str | pathlib.Path) -> dict:
     with open(fp) as f:
         return json.load(f)
 
-
 def parse_args() -> argparse.Namespace:
     p = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     p.add_argument("--config", help="JSON with experiment parameters")
