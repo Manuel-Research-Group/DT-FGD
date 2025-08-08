@@ -12,11 +12,13 @@ A lightweight variant that replaces bilateral filtering with the efficient domai
 ## Requirements
 - **NVIDIA GPU** with at least **12 GB VRAM** for full-resolution experiments.  
   (Lower-VRAM GPUs are supported with the `--decode-cpu` flag.)
+  - Tested on: NVIDIA RTX 3090, RTX 3060 and RTX 4060 (using `decode_cpu` flag)
 - **NVIDIA CUDA Toolkit** — [Download and installation guide](https://developer.nvidia.com/cuda-downloads).
 - **Conda** (Miniconda or Anaconda) — not strictly required, but the provided setup and environment files are designed for it, making installation significantly easier.  
   [Installation guide](https://docs.conda.io/en/latest/miniconda.html).
 - **Native Linux environment** is strongly recommended.  
   WSL is not supported due to known compatibility issues with the Taichi module that may prevent execution.
+  - Tested on: Ubuntu 20.04 LTS and Fedora Workstation 42 
 
 
 ## 1  Quick setup
