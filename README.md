@@ -1,4 +1,4 @@
-# dtFGD – Replicability Pack :sparkles:
+# DT-FGD – Replicability Pack :sparkles:
 
 *Memory‑Efficient **Filter‑Guided Diffusion** with Domain‑Transform Filtering*  
 One‑command reproduction of every qualitative figure **plus** a flexible
