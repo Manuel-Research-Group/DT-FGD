@@ -1,4 +1,8 @@
 # DT-FGD – Memory-Efficient Filter-Guided Diffusion with Domain Transform Filtering :sparkles:
+<a href="docs/representative_250.png">
+  <img src="docs/representative_250.png" alt="FGD vs dtFGD representative thumbnail" width="250" height="250" align="right">
+</a>
+
 A lightweight variant that replaces bilateral filtering with the efficient domain transform filter and introduces a normalization strategy for the guidance image’s latent representation.
 
 *Memory‑Efficient **Filter‑Guided Diffusion** with Domain‑Transform Filtering*
