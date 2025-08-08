@@ -7,8 +7,12 @@ CLI for your own prompts.
 ---
 
 ## Requirements
-- NVIDIA CUDA Toolkit must be installed, download and instructions [here](https://developer.nvidia.com/cuda-downloads).
-- Linux system
+- **NVIDIA GPU** with at least **12 GB VRAM** for full-resolution experiments.  
+  (Lower-VRAM GPUs are supported with the `--decode-cpu` flag.)
+- **NVIDIA CUDA Toolkit** — [Download and installation guide](https://developer.nvidia.com/cuda-downloads).
+- **Native Linux environment** is strongly recommended.  
+  WSL is not supported due to known compatibility issues with the Taichi module that may prevent execution.
+
 
 ## 1  Quick setup
 
