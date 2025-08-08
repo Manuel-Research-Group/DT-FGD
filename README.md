@@ -39,11 +39,21 @@ Or, using our bash script for initiating/running experiments for all test cases:
 
 ## 2  Reproduce a paper figure
 
+Our script produces the result of both FGD (original method) and DT-FGD (our approach). To reproduce a example, you can use the config present in the configs folder:
+
 ```bash
 python run_experiment.py --config configs/fig1_dog.json
 ```
 
 Outputs: `results/fgd.png`, `results/dtfgd.png`, `results/comparison.png`.
+
+### Script for running directly
+To reproduce the representative figure from the paper (dog portrait), run:
+```bash
+./replicate_representative.sh
+```
+
+The representative image will be under `results/woman_blueheadband_dtfgd.png`
 
 ---
 
@@ -51,9 +61,9 @@ Outputs: `results/fgd.png`, `results/dtfgd.png`, `results/comparison.png`.
 
 ```bash
 python run_experiment.py \
-  --prompt "A Van Gogh style fox playing guitar" \
-  --sigma_s 4 --sigma_r 0.25 --detail 1.4 --t_end 20 \
-  --plot-intermediate
+    --prompt "A Van Gogh style fox portrait in a blue headband" \
+    --sigma_s 4 --sigma_r 0.25 --detail 0.8 --t_end 15 \
+    --image_size 1024 1024 --guide assets/woman_blueheadband.png
 ```
 
 ---
@@ -62,7 +72,7 @@ python run_experiment.py \
 
 ```
 
-dtFGD/
+DT-FGD/
 ├── assets/ # Example images used in configs and docs
 │ ├── bread_2.png
 │ ├── gauss.png

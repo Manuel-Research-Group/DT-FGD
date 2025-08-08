@@ -26,11 +26,9 @@ Prereqs: a fresh Ubuntu 22.04, Miniconda (or Anaconda), and a CUDA-capable NVIDI
 -------------------------------------------------------------------------------
 Representative figure (Requirement #2)
 -------------------------------------------------------------------------------
-Primary script (no params): ./setup_run.sh
-This script generates multiple figures in sequence. To reproduce ONLY the representative figure from the paper (dog portrait), run:
+To reproduce ONLY the representative figure from the paper (dog portrait), run:
 
-   conda activate dtfgd
-   python run_experiment.py --config configs/fig1_portrait_of_a_dog.json
+   ./replicate_representative.sh
 
 Outputs are written to:
    results/woman_blueheadband_fgd.png
