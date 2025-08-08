@@ -1,8 +1,7 @@
-# DT-FGD – Replicability Pack :sparkles:
+# DT-FGD – Memory-Efficient Filter-Guided Diffusion with Domain Transform Filtering :sparkles:
+A lightweight variant that replaces bilateral filtering with the efficient domain transform filter and introduces a normalization strategy for the guidance image’s latent representation.
 
-*Memory‑Efficient **Filter‑Guided Diffusion** with Domain‑Transform Filtering*  
-One‑command reproduction of every qualitative figure **plus** a flexible
-CLI for your own prompts.
+*Memory‑Efficient **Filter‑Guided Diffusion** with Domain‑Transform Filtering*
 
 ---
 
@@ -110,15 +109,7 @@ dtFGD/
 
 ---
 
-## 5  Tests / CI
-
-The GitHub Action in `.github/workflows/smoke.yml` installs the environment
-and runs a **CPU‑only** quick inference to ensure the repo is self‑contained.
-Public repositories incur **zero** cost on GitHub‑hosted runners.
-
----
-
-## 6  Licence
+## 5  Licence
 
 * All code in this repository is released under **MIT License**.
 * See LICENSE.txt for the full text.
