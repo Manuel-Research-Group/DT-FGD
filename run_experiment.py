@@ -126,7 +126,7 @@ def main():
         del fgd
         fgd_ok = True
     except:
-        print("Error: FGD generation failed. Ensure your GPU has at least 12 GB of VRAM to run.")
+        print("Error: FGD generation failed. Ensure your GPU has at least 16 GB of VRAM to run original FGD.")
 
 
     dtfgd_ok = False

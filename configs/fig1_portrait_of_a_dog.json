@@ -9,5 +9,5 @@
   "t_end": 15,
   "image_size": [1024, 1024],
   "sd_version": "2.1",
-  "decode_cpu": false
+  "decode_cpu": true
 }
