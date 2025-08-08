@@ -6,7 +6,7 @@
 A lightweight variant that replaces bilateral filtering with the efficient domain transform filter and introduces a normalization strategy for the guidance image’s latent representation.
 
 *Memory‑Efficient **Filter‑Guided Diffusion** with Domain‑Transform Filtering*
-
+<br clear="right"/>
 ---
 
 ## Requirements
