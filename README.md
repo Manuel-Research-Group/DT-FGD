@@ -1,8 +1,7 @@
-# DT-FGD – Replicability Pack :sparkles:
+# DT-FGD – Memory-Efficient Filter-Guided Diffusion with Domain Transform Filtering :sparkles:
+A lightweight variant that replaces bilateral filtering with the efficient domain transform filter and introduces a normalization strategy for the guidance image’s latent representation.
 
-*Memory‑Efficient **Filter‑Guided Diffusion** with Domain‑Transform Filtering*  
-One‑command reproduction of every qualitative figure **plus** a flexible
-CLI for your own prompts.
+*Memory‑Efficient **Filter‑Guided Diffusion** with Domain‑Transform Filtering*
 
 ---
 
