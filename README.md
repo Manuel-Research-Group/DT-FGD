@@ -45,6 +45,12 @@ python run_experiment.py --config configs/fig1_dog.json
 
 Outputs: `results/fgd.png`, `results/dtfgd.png`, `results/comparison.png`.
 
+### Script for running directly
+To reproduce ONLY the representative figure from the paper (dog portrait), run:
+```bash
+./replicate_representative.sh
+```
+
 ---
 
 ## 3  Run your own experiment
@@ -52,6 +58,7 @@ Outputs: `results/fgd.png`, `results/dtfgd.png`, `results/comparison.png`.
 ```bash
 python run_experiment.py \
   --prompt "A Van Gogh style fox playing guitar" \
+  --guide assets/woman_blueheadband.png
   --sigma_s 4 --sigma_r 0.25 --detail 1.4 --t_end 20 \
   --plot-intermediate
 ```
@@ -62,7 +69,7 @@ python run_experiment.py \
 
 ```
 
-dtFGD/
+DT-FGD/
 ├── assets/ # Example images used in configs and docs
 │ ├── bread_2.png
 │ ├── gauss.png
