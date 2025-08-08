@@ -62,6 +62,8 @@ def parse_args() -> argparse.Namespace:
     p.add_argument("--no-input-release", action="store_true",
                    help="keep intermediate tensors on GPU (debugging)")
     # misc
+    p.add_argument("--fgd", action="store_true", help="runs only fgd (original method)")
+    p.add_argument("--dtfgd", action="store_true", help="runs only dtfgd (our approach)")
     p.add_argument("--outdir", default="results", help="directory to write PNGs")
     return p.parse_args()
 
@@ -112,43 +114,49 @@ def main():
     fgd_ok = False
     img_orig = None
 
-    try:
-        fgd = FGD_mod.FGD(model, guide_img,
-                        detail=args.detail,
-                        t_end=args.t_end,
-                        sigmas=[args.sigma_s, args.sigma_s, args.sigma_r])
-        
-        t0 = time.time()
-        img_orig = model.generate_FGD(fgd, seed=args.seed)
-        t_orig = time.time() - t0
-        img_orig.save(outdir / f"{img_name}_fgd.png")
+    if (not (args.dtfgd or args.fgd) or args.fgd):
+        try:
+            fgd = FGD_mod.FGD(model, guide_img,
+                            detail=args.detail,
+                            t_end=args.t_end,
+                            sigmas=[args.sigma_s, args.sigma_s, args.sigma_r])
+            
+            t0 = time.time()
+            img_orig = model.generate_FGD(fgd, seed=args.seed)
+            t_orig = time.time() - t0
+            img_orig.save(outdir / f"{img_name}_fgd.png")
 
-        del fgd
-        fgd_ok = True
-    except:
-        print("Error: FGD generation failed. Ensure your GPU has at least 16 GB of VRAM to run original FGD.")
-
+            del fgd
+            fgd_ok = True
+        except:
+            print("Error: FGD generation failed. Ensure your GPU has at least 16 GB of VRAM to run original FGD.")
+    else:
+        print("ℹ️ FGD generation skipped (not requested).")
 
     dtfgd_ok = False
     img_dt = None
-    try:
-        # our approach dtFGD
-        dt_filter = dtFGD(model, guide_img,
-                        detail=args.detail,
-                        sigmas=[args.sigma_s, args.sigma_s, args.sigma_r],
-                        t_end=args.t_end,
-                        num_iterations=3,
-                        device=device)
-        
-        t0 = time.time()
-        img_dt = model.generate_FGD(dt_filter, seed=args.seed)
-        t_dt = time.time() - t0
-        img_dt.save(outdir / f"{img_name}_dtfgd.png")
+    if (not (args.dtfgd or args.fgd) or args.dtfgd):
+        try:
+            # our approach dtFGD
+            dt_filter = dtFGD(model, guide_img,
+                            detail=args.detail,
+                            sigmas=[args.sigma_s, args.sigma_s, args.sigma_r],
+                            t_end=args.t_end,
+                            num_iterations=3,
+                            device=device)
+            
+            t0 = time.time()
+            img_dt = model.generate_FGD(dt_filter, seed=args.seed)
+            t_dt = time.time() - t0
+            img_dt.save(outdir / f"{img_name}_dtfgd.png")
 
-        del dt_filter
-        dtfgd_ok = True
-    except:
-        print("Error: DT-FGD generation failed. Ensure your GPU has at least 8 GB of VRAM to run.")
+            del dt_filter
+            dtfgd_ok = True
+        except:
+            print("Error: DT-FGD generation failed. Ensure your GPU has at least 8 GB of VRAM to run.")
+    else:
+        print("ℹ️ DT-FGD generation skipped (not requested).")
+
 
     # side-by-side
     if not fgd_ok and not dtfgd_ok:
