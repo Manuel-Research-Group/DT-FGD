@@ -1,0 +1,11 @@
+Replicability Stamp – Liability Form
+
+We grant the Replicability Committee and the assigned reviewer permission to
+review our code and publicly advertise the outcome after the stamp is approved.
+This permission is limited to the evaluation process and does not transfer any IP.
+
+Name: Gustavo Lopes Tamiosso
+Affiliation: Graduate Program in Computer Science (PPGC), Institute of Informatics (INF), Federal University of Rio Grande do Sul (UFRGS), Porto Alegre, RS, Brazil
+Email: gltamiosso@inf.ufrgs.br
+Date: 2025-08-08
+Signature: /s/ Gustavo Lopes Tamiosso

@@ -1,0 +1,75 @@
+Title: DT-FGD – Memory-Efficient Filter-Guided Diffusion with Domain Transform Filtering
+Authors: Gustavo Tamiosso; Manuel Menezes de Oliveira Neto (advisor)
+Affiliation: Graduate Program in Computer Science (PPGC), Institute of Informatics (INF), Federal University of Rio Grande do Sul (UFRGS), Porto Alegre, RS, Brazil
+Tested OS: Ubuntu 22.04 LTS (vanilla install)
+
+Overview:
+DT-FGD is a lightweight variant of Filter-Guided Diffusion that replaces the cross-bilateral step with an efficient Domain Transform (NC-DT) filter and adds a normalization strategy for the guidance latent. The repo includes a no-parameter script and configs to regenerate a representative figure and comparisons against the original FGD (provided as a git submodule).
+
+-------------------------------------------------------------------------------
+How to install and run (no parameters)
+-------------------------------------------------------------------------------
+Prereqs: a fresh Ubuntu 22.04, Miniconda (or Anaconda), and a CUDA-capable NVIDIA GPU. No manual PATH setup required.
+
+1) Clone and init submodule:
+   git clone https://github.com/Manuel-Research-Group/DT-FGD.git
+   cd DT-FGD
+   git submodule update --init --recursive
+
+2) One-click script (creates the conda env if missing and runs experiments):
+   ./setup_run.sh
+
+   Notes:
+   - Stable Diffusion model weights are downloaded from Hugging Face on first run
+     (CreativeML OpenRAIL-M license must be accepted by the user).
+
+-------------------------------------------------------------------------------
+Representative figure (Requirement #2)
+-------------------------------------------------------------------------------
+Primary script (no params): ./setup_run.sh
+This script generates multiple figures in sequence. To reproduce ONLY the representative figure from the paper (dog portrait), run:
+
+   conda activate dtfgd
+   python run_experiment.py --config configs/fig1_portrait_of_a_dog.json
+
+Outputs are written to:
+   results/woman_blueheadband_fgd.png
+   results/woman_blueheadband_dtfgd.png <-- our representative image
+   results/woman_blueheadband_comparison.png
+
+Representative PNG thumbnail (250x250) is available at:
+   docs/representative_250.png
+Raw URL for forms:
+   https://raw.githubusercontent.com/Manuel-Research-Group/dtFGD/main/docs/representative_250.png
+
+-------------------------------------------------------------------------------
+Dependencies and licenses (Requirement #10)
+-------------------------------------------------------------------------------
+Code: MIT License (see LICENSE).
+Submodule (original FGD): MIT (upstream repository).
+Libraries: PyTorch (BSD-3-Clause), Diffusers/Transformers/Accelerate/Taichi (Apache-2.0), NumPy (BSD), TQDM (MIT), Pillow (permissive).
+Models: Stable Diffusion weights under CreativeML OpenRAIL-M (accepted during download).
+
+-------------------------------------------------------------------------------
+Hardware and runtime notes
+-------------------------------------------------------------------------------
+GPU recommended (≥12 GB VRAM).
+Typical runtime on consumer GPU: a few minutes per image.
+
+-------------------------------------------------------------------------------
+File layout (key files)
+-------------------------------------------------------------------------------
+run_experiment.py            # main entry point
+setup_run.sh                 # no-parameter end-to-end script
+configs/*.json               # configs for paper figures
+src/diffusionModel.py        # modified diffusion pipeline (supports --decode-cpu, plotting)
+src/dtFGD.py, src/ncdt.py    # DT-FGD implementation
+FilteredGuidedDiffusion/     # original FGD (git submodule)
+results/                     # outputs (auto-created)
+docs/representative_250.png  # 250×250 thumbnail
+
+-------------------------------------------------------------------------------
+Contact
+-------------------------------------------------------------------------------
+Gustavo Tamiosso <gltamiosso@inf.ufrgs.br>
+Affiliation: PPGC/INF/UFRGS, Porto Alegre, RS, Brazil
