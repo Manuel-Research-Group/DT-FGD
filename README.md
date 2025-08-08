@@ -58,22 +58,54 @@ python run_experiment.py \
   --plot-intermediate
 ```
 
-**New flags introduced**
-
-| Flag                 | What it does                                           |
-|----------------------|--------------------------------------------------------|
-| `--plot-intermediate`| Shows per‑step visual diagnostics (slow, for research) |
-| `--decode-cpu`       | Keeps VAE on CPU – cuts GPU memory        |
-
 ---
 
 ## 4  Folder structure
 
 ```
-|-- run_experiment.py      ← main entry‑point (updated)
-|-- src/
-|   |-- diffusionModel.py  ← modified to support the new flags
-|   |-- dtFGD.py, ncdt.py  ← your algorithm
+
+dtFGD/
+├── assets/ # Example images used in configs and docs
+│ ├── bread_2.png
+│ ├── gauss.png
+│ ├── monalisa.png
+│ ├── red_hat.jpg
+│ └── woman_blueheadband.png
+│
+├── configs/ # JSON configs for reproducing paper figures
+│ ├── fig1_portrait_of_a_dog.json
+│ ├── fig3_monalisa_dog.json
+│ ├── fig7_cat_red_hat.json
+│ ├── fig9_gauss_bird.json
+│ ├── fig10_steak_bread.json
+│ └── fig10_steak_bread1192.json
+│
+├── FilteredGuidedDiffusion/ # Original FGD submodule (MIT license)
+│ ├── cbilateral.py
+│ ├── diffusionModel.py
+│ ├── FGD.py
+│ ├── figures/
+│ ├── imgs/
+│ └── README.md
+│
+├── results/ # Generated outputs from experiments
+│ ├── *_fgd.png
+│ ├── *_dtfgd.png
+│ └── *_comparison.png
+│
+├── src/ # Main implementation of DT-FGD
+│ ├── diffusionModel.py # Modified diffusion pipeline
+│ ├── dtFGD.py # Domain Transform–based guided diffusion
+│ ├── ncdt.py # Normalized convolution domain transform
+│ └── util.py
+│
+├── environment.yml # Conda environment definition
+├── fgd_variable_resolution.patch # Patch for FGD resolution handling
+├── guided_filter_dt.png # Illustration of guided filtering
+├── LICENSE.txt
+├── README.md
+├── run_experiment.py # Main CLI entry point
+└── setup_run.sh # Helper script to run all test cases
 ```
 
 ---
