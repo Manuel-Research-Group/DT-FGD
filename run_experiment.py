@@ -78,6 +78,7 @@ def main():
 
     device = "cuda" if torch.cuda.is_available() else "cpu"
     print(f"Using device: {device}")
+    print(args)
 
     # ---- diffusion model -----------------------------------------------------
     model = diffusionModel(
@@ -93,7 +94,6 @@ def main():
         batch_size=1,
         guidance_scale=args.guidance_scale
     )
-    # model = diffusionModel(scheduler='ddpm', version='2.1', use_ema=True, num_steps=50, height=1024, width=1024, plot_intermediate=False)
     model.initialize_latents_random(args.initial_seed)
 
     model.set_prompt(args.prompt)
@@ -116,7 +116,7 @@ def main():
                         sigmas=[args.sigma_s, args.sigma_s, args.sigma_r])
         
         t0 = time.time()
-        img_orig = model.generate_FGD(fgd, seed=10)
+        img_orig = model.generate_FGD(fgd, seed=args.seed)
         t_orig = time.time() - t0
         img_orig.save(outdir / f"{img_name}_fgd.png")
 
@@ -138,7 +138,7 @@ def main():
                         device=device)
         
         t0 = time.time()
-        img_dt = model.generate_FGD(dt_filter, seed=10)
+        img_dt = model.generate_FGD(dt_filter, seed=args.seed)
         t_dt = time.time() - t0
         img_dt.save(outdir / f"{img_name}_dtfgd.png")
 

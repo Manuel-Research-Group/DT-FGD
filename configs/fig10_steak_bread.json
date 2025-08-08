@@ -1,8 +1,8 @@
 {
-  "prompt": "A photo of a steak",
+  "prompt": "a photo of a steak",
   "guide": "assets/bread_2.png",
-  "seed": 1,
-  "initial_seed": 10,
+  "seed": 10,
+  "initial_seed": 1,
   "sigma_s": 3.0,
   "sigma_r": 0.3,
   "t_end": 15,

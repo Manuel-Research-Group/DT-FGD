@@ -1,12 +1,13 @@
 {
   "prompt": "A photo of a steak",
   "guide": "assets/bread_2.png",
-  "seed": 1,
-  "initial_seed": 10,
+  "seed": 10,
+  "initial_seed": 1,
   "sigma_s": 3.0,
   "sigma_r": 0.3,
   "t_end": 15,
   "detail": 1.6,
   "image_size": [1192, 1192],
-  "sd_version": "1.4"
+  "sd_version": "1.4",
+  "decode_cpu": true
 }

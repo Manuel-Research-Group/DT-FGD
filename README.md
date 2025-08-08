@@ -6,6 +6,10 @@ CLI for your own prompts.
 
 ---
 
+## Requirements
+- NVIDIA CUDA Toolkit must be installed, download and instructions [here](https://developer.nvidia.com/cuda-downloads).
+- Linux system
+
 ## 1  Quick setup
 
 ```bash
@@ -16,8 +20,6 @@ git submodule update --init --recursive   # pulls original FGD implementation
 conda env create -f environment.yml       # Torch 2.4, Diffusers 0.30
 conda activate dtfgd
 ```
-
-*GPU is optional.*
 
 | Scenario                  | Flag(s)                  | Peak VRAM | Speed impact |
 |---------------------------|--------------------------|-----------|--------------|
