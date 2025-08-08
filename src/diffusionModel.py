@@ -240,9 +240,7 @@ class diffusionModel():
         else:
             st_filtered = st
 
-        if self.plot_intermediate:
-            print(f"Step: {self.num_steps-s}, s: {s}, with guidance: {'yes' if (s > filter.t_end) else 'no'}")
-            
+        if self.plot_intermediate:            
             # Decode images from both filters
             decoded_latents_1 = normalize_latents(st.clone().detach())  # Replace with second filter output
             decoded_latents_2 = normalize_latents(st_filtered.clone().detach())

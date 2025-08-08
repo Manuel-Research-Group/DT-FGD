@@ -72,15 +72,10 @@ class dtFGD():
             sigmas = np.insert(sigmas, 1, sigmas[0])
         self.sigmas = sigmas
 
-        # guide_latent_processed = self.guide_latent.detach().cpu().permute(0, 2, 3, 1).numpy()
-        # guide_latent_processed = np.squeeze(guide_latent_processed)
-
         self.filter_preprocess(self.guide_latent)
         
 
         guide_structure_latent = self.filter(self.guide_latent)
-
-        # del guide_latent_repr
 
         guide_mean = torch.mean(guide_structure_latent, (2,3), keepdim=True)
         guide_std = torch.std(guide_structure_latent, (2,3), keepdim=True)

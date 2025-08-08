@@ -58,7 +58,7 @@ def parse_args() -> argparse.Namespace:
     p.add_argument("--image_size", type=int, nargs=2, default=[512, 512], help="Image size (H, W)")
     # resource flags
     p.add_argument("--decode-cpu", action="store_true", help="move VAE to CPU")
-    p.add_argument("--plot-intermediate", action="store_true", help="show per‑step visuals")
+    p.add_argument("--plot-intermediate", action="store_false", help="show per‑step visuals")
     p.add_argument("--no-input-release", action="store_true",
                    help="keep intermediate tensors on GPU (debugging)")
     # misc
@@ -74,11 +74,11 @@ def main():
         for k, v in cfg.items():
             setattr(args, k.replace('-', '_'), v)
 
-    print(args)
-
     device = "cuda" if torch.cuda.is_available() else "cpu"
     print(f"Using device: {device}")
-    print(args)
+    print("Args used:")
+    for k, v in vars(args).items():
+        print(f"  {k}: {v}")
 
     # ---- diffusion model -----------------------------------------------------
     model = diffusionModel(
