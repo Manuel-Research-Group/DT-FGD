@@ -1,5 +1,5 @@
 {
-  "prompt": "A photo of a steak",
+  "prompt": "1 photo of a steak",
   "guide": "assets/bread_2.png",
   "seed": 10,
   "initial_seed": 1,
@@ -7,7 +7,8 @@
   "sigma_r": 0.3,
   "t_end": 15,
   "detail": 1.6,
-  "image_size": [1192, 1192],
+  "image_size": [1024, 1024],
   "sd_version": "1.4",
-  "decode_cpu": true
+  "decode_cpu": false,
+  "name": "steak_bread_1192"
 }

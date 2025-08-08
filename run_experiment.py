@@ -51,6 +51,7 @@ def parse_args() -> argparse.Namespace:
     p.add_argument("--guidance_scale", type=float, default=7.5)
     p.add_argument("--detail",  type=float, default=1.2)
     p.add_argument("--t_end",   type=int, default=15)
+    p.add_argument("--name", type=str, default=None, help="Optional name parameter")
     # SD parameters
     p.add_argument("--sd_version", default="1.5")
     p.add_argument("--steps", type=int, default=50, help="diffusion steps")
@@ -102,7 +103,10 @@ def main():
     outdir = pathlib.Path(args.outdir)
     outdir.mkdir(exist_ok=True)
 
-    img_name = args.guide.split("/")[-1].split(".")[0]
+    if args.name:
+        img_name = args.name
+    else:
+        img_name = args.guide.split("/")[-1].split(".")[0]
     # ----------------- run ----------------------------------------------------
     # original FGD
     fgd_ok = False

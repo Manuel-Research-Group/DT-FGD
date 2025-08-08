@@ -8,5 +8,6 @@
   "t_end": 15,
   "detail": 1.6,
   "image_size": [512, 512],
-  "sd_version": "1.4"
+  "sd_version": "1.4",
+  "name": "steak_bread_512"
 }
