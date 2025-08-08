@@ -80,14 +80,15 @@ Public repositories incur **zero** cost on GitHub‑hosted runners.
 
 ## 6  Licence
 
-* All **new** code in this repository: **CC‑BY‑NC 4.0**.  
+* All code in this repository is released under **MIT License**.
+* See LICENSE.txt for the full text.
 
 ### Original FGD code
 
-This project links to, but **does not redistribute**, the reference
-implementation released by Gu et al.  Please ensure you `git submodule
-update --init` after cloning.  Copyright remains with the original
-authors; all usage must follow their terms.
+This project links to the reference implementation by Gu et al. at
+FilteredGuidedDiffusion/, which is licensed under MIT in their repository.
+The submodule retains its original copyright and license.
+Please run git submodule update --init after cloning.
 
 
 ---

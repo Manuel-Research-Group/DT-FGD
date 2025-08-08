@@ -1,6 +1,7 @@
 #!/bin/bash
 git submodule update --init --recursive
-# Ensure conda commands are available in scripts
+
+pushd FilteredGuidedDiffusion && git apply fgd_variable_resolution.patch && popd
 
 # Only run this manually once if the env doesn't exist
 if ! conda env list | grep -q 'dtfgd'; then
