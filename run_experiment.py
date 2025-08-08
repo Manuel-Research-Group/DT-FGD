@@ -75,25 +75,25 @@ def main():
             setattr(args, k.replace('-', '_'), v)
 
     print(args)
-    # exit(0)
+
     device = "cuda" if torch.cuda.is_available() else "cpu"
     print(f"Using device: {device}")
 
     # ---- diffusion model -----------------------------------------------------
-    # model = diffusionModel(
-    #     height=args.image_size[0],
-    #     width=args.image_size[1],
-    #     num_steps=args.steps,
-    #     scheduler='ddpm',
-    #     use_ema=True,
-    #     version=args.sd_version,
-    #     plot_intermediate=args.plot_intermediate,
-    #     decode_cpu=args.decode_cpu,
-    #     device=device,
-    #     batch_size=1,
-    #     guidance_scale=args.guidance_scale
-    # )
-    model = diffusionModel(scheduler='ddpm', version='2.1', use_ema=True, num_steps=50, height=1024, width=1024, plot_intermediate=False)
+    model = diffusionModel(
+        height=args.image_size[0],
+        width=args.image_size[1],
+        num_steps=args.steps,
+        scheduler='ddpm',
+        use_ema=True,
+        version=args.sd_version,
+        plot_intermediate=args.plot_intermediate,
+        decode_cpu=args.decode_cpu,
+        device=device,
+        batch_size=1,
+        guidance_scale=args.guidance_scale
+    )
+    # model = diffusionModel(scheduler='ddpm', version='2.1', use_ema=True, num_steps=50, height=1024, width=1024, plot_intermediate=False)
     model.initialize_latents_random(args.initial_seed)
 
     model.set_prompt(args.prompt)
