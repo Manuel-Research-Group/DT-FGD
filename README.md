@@ -25,11 +25,6 @@ git submodule update --init --recursive   # pulls original FGD implementation
 conda env create -f environment.yml       # Torch 2.4, Diffusers 0.30
 conda activate dtfgd
 ```
-
-| Scenario                  | Flag(s)                  | Peak VRAM | Speed impact |
-|---------------------------|--------------------------|-----------|--------------|
-| 8 GiB GPU (save memory)   | `--decode-cpu`           | ↓ ≈ 5 GB  | +15 %        |
-
 Or, using our bash script for initiating/running experiments for all test cases:
 
 ```bash
