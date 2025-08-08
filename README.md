@@ -77,15 +77,7 @@ python run_experiment.py \
 
 ---
 
-## 5  Tests / CI
-
-The GitHub Action in `.github/workflows/smoke.yml` installs the environment
-and runs a **CPU‑only** quick inference to ensure the repo is self‑contained.
-Public repositories incur **zero** cost on GitHub‑hosted runners.
-
----
-
-## 6  Licence
+## 5  Licence
 
 * All code in this repository is released under **MIT License**.
 * See LICENSE.txt for the full text.
