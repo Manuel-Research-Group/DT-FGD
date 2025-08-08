@@ -12,6 +12,7 @@ if git apply --check ../fgd_variable_resolution.patch 2>/dev/null; then
 else
   echo "ℹ️ Patch skipped (already applied or not applicable)."
 fi
+popd
 
 # quick env bootstrap (create if missing; else reuse)
 if ! conda env list | grep -qE '^\s*dtfgd\s'; then
