@@ -1,7 +1,7 @@
 Title: DT-FGD – Memory-Efficient Filter-Guided Diffusion with Domain Transform Filtering
 Authors: Gustavo Lopes Tamiosso; Caetano Müller; Lucas Spagnolo Bombana; Manuel M. Oliveira (advisor)
 Affiliation: Graduate Program in Computer Science (PPGC), Institute of Informatics (INF), Federal University of Rio Grande do Sul (UFRGS), Porto Alegre, RS, Brazil
-Tested OS: Ubuntu 22.04 LTS (vanilla install)
+Tested OS: Ubuntu 22.04 LTS (vanilla install) and Fedora Workstation 42
 
 Overview:
 DT-FGD is a lightweight variant of Filter-Guided Diffusion that replaces the cross-bilateral step with an efficient Domain Transform (NC-DT) filter and adds a normalization strategy for the guidance latent. The repo includes a no-parameter script and configs to regenerate a representative figure and comparisons against the original FGD (provided as a git submodule).
