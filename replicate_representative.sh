@@ -19,5 +19,5 @@ if ! conda env list | grep -qE '^\s*dtfgd\s'; then
   conda env create -f environment.yml
 fi
 
-conda run -n dtfgd --live-stream python run_experiment.py --dtfgd --config configs/fig1_portrait_of_a_dog.json
-echo "✓ Representative figure generated at ./results/woman_blueheadband_dtfgd.png"
+conda run -n dtfgd --live-stream python run_experiment.py --dtfgd --config configs/fig7_cat_red_hat.json
+echo "✓ Representative figure generated at ./results/red_hat_dtfgd.png"

@@ -1,5 +1,5 @@
 Title: DT-FGD – Memory-Efficient Filter-Guided Diffusion with Domain Transform Filtering
-Authors: Gustavo Tamiosso; Manuel Menezes de Oliveira Neto (advisor)
+Authors: Gustavo Lopes Tamiosso; Caetano Müller; Lucas Spagnolo Bombana; Manuel M. Oliveira (advisor)
 Affiliation: Graduate Program in Computer Science (PPGC), Institute of Informatics (INF), Federal University of Rio Grande do Sul (UFRGS), Porto Alegre, RS, Brazil
 Tested OS: Ubuntu 22.04 LTS (vanilla install)
 
@@ -26,14 +26,11 @@ Prereqs: a fresh Ubuntu 22.04, Miniconda (or Anaconda), and a CUDA-capable NVIDI
 -------------------------------------------------------------------------------
 Representative figure (Requirement #2)
 -------------------------------------------------------------------------------
-To reproduce ONLY the representative figure from the paper (dog portrait), run:
+To reproduce ONLY the representative figure from the paper (cat in a red hat portrait), run:
 
    ./replicate_representative.sh
 
-Outputs are written to:
-   results/woman_blueheadband_fgd.png
-   results/woman_blueheadband_dtfgd.png <-- our representative image
-   results/woman_blueheadband_comparison.png
+Representative image will be written to `results/red_hat_dtfgd.png`
 
 Representative PNG thumbnail (250x250) is available at:
    docs/representative_250.png
@@ -55,9 +52,24 @@ GPU recommended (≥12 GB VRAM).
 Typical runtime on consumer GPU: a few minutes per image.
 
 -------------------------------------------------------------------------------
+Determinism and Cross-GPU Reproducibility
+-------------------------------------------------------------------------------
+Runs with fixed seeds on the same GPU model and software stack are reproducible.
+Across different GPUs or CUDA/cuDNN/driver versions, results can differ,
+especially at higher resolutions (e.g., 1024×1024), due to architecture-specific
+kernel selection and floating-point rounding differences in attention/conv ops.
+This behavior is expected for diffusion models.
+
+In our tests, 1024×1024 images showed more pronounced differences across GPUs
+other than the RTX 3090 (our main test platform). The `red_hat` example was
+selected as representative because it produces visually similar outputs across
+tested GPUs.
+
+-------------------------------------------------------------------------------
 File layout (key files)
 -------------------------------------------------------------------------------
 run_experiment.py            # main entry point
+replicate_representative.sh                 # no-parameter end-to-end script for representative image
 setup_run.sh                 # no-parameter end-to-end script
 configs/*.json               # configs for paper figures
 src/diffusionModel.py        # modified diffusion pipeline (supports --decode-cpu, plotting)

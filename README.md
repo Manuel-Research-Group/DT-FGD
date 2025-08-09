@@ -10,27 +10,36 @@ A lightweight variant that replaces bilateral filtering with the efficient domai
 ---
 
 ## Requirements
-- **NVIDIA GPU** with at least **12 GB VRAM** for full-resolution experiments.  
+- **NVIDIA GPU** with at least **12 GB VRAM** for DT-FGD and **16 GB VRAM** for original FGD at full resolution.
   (Lower-VRAM GPUs are supported with the `--decode-cpu` flag.)
-  - Tested on: NVIDIA RTX 3090, RTX 3060 and RTX 4060 (using `decode_cpu` flag)
+  - Tested on: NVIDIA RTX 3090, RTX 3060, RTX 4060.
 - **NVIDIA CUDA Toolkit** — [Download and installation guide](https://developer.nvidia.com/cuda-downloads).
-- **Conda** (Miniconda or Anaconda) — not strictly required, but the provided setup and environment files are designed for it, making installation significantly easier.  
+- **Conda** (Miniconda or Anaconda) — not strictly required, but the provided setup and environment files are designed for it.  
   [Installation guide](https://docs.conda.io/en/latest/miniconda.html).
 - **Native Linux environment** is strongly recommended.  
   WSL is not supported due to known compatibility issues with the Taichi module that may prevent execution.
-  - Tested on: Ubuntu 20.04 LTS and Fedora Workstation 42 
+  - Tested on: Ubuntu 20.04 LTS and Fedora Workstation 42
 
+### Determinism and Cross-GPU Reproducibility
+
+Diffusion models use iterative denoising and are sensitive to floating-point arithmetic. With fixed seeds on the **same GPU model and software stack**, runs are reproducible. **Across different GPUs or CUDA/cuDNN/driver versions, outputs can differ**, and this effect is more noticeable at higher resolutions (e.g., **1024×1024**). This stems from architecture-specific kernel selection and rounding differences in attention/convolution operations. This behavior is expected for diffusion models.
+
+In our experiments, 1024×1024 images showed larger visual variations across GPUs
+other than the RTX 3090, which was the main GPU used during the paper experiments.
+For consistency, the representative `red_hat` example was selected because it
+produces similar outputs across the tested GPUs.
 
 ## 1  Quick setup
 
 ```bash
-git clone https://github.com/Manuel-Research-Group/dtFGD.git
-cd dtfgd
+git clone https://github.com/Manuel-Research-Group/DT-FGD.git
+cd DT-FGD
 git submodule update --init --recursive   # pulls original FGD implementation
 
 conda env create -f environment.yml       # Torch 2.4, Diffusers 0.30
 conda activate dtfgd
 ```
+
 Or, using our bash script for initiating/running experiments for all test cases:
 
 ```bash
@@ -44,18 +53,17 @@ Or, using our bash script for initiating/running experiments for all test cases:
 Our script produces the result of both FGD (original method) and DT-FGD (our approach). To reproduce a example, you can use the config present in the configs folder:
 
 ```bash
-python run_experiment.py --config configs/fig1_dog.json
+python run_experiment.py --dtfgd --config configs/fig7_cat_red_hat.json
 ```
 
-Outputs: `results/fgd.png`, `results/dtfgd.png`, `results/comparison.png`.
-
 ### Script for running directly
-To reproduce the representative figure from the paper (dog portrait), run:
+To reproduce the representative figure from the paper (cat in a red hat), run:
+
 ```bash
 ./replicate_representative.sh
 ```
 
-The representative image will be under `results/woman_blueheadband_dtfgd.png`
+The representative image will be under `results/red_hat_dtfgd.png`
 
 ---
 
